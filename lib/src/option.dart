@@ -10,6 +10,11 @@ import 'functions.dart';
 abstract class Option<A> {
   bool get isNone;
   bool get isSome;
+
+  B fold<B>(B ifNone(), B ifSome(A a));
+  A getOrElse(A a) => fold(() => a, (value) => value);
+
+  Option<B> map<B>(B f(A a)) => fold(() => none(), (a) => some(f(a)));
 }
 
 class None<A> extends Option<A> {
@@ -23,6 +28,9 @@ class None<A> extends Option<A> {
 
   @override
   bool get isSome => false;
+
+  @override
+  B fold<B>(B Function() ifNone, B Function(A a) ifSome) => ifNone();
 }
 
 class Some<A> extends Option<A> {
@@ -40,6 +48,9 @@ class Some<A> extends Option<A> {
 
   @override
   bool get isSome => true;
+
+  @override
+  B fold<B>(B Function() ifNone, B Function(A a) ifSome) => ifSome(value);
 }
 
 Option<A> none<A>() => None();

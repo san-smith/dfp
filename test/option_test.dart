@@ -42,4 +42,12 @@ void main() {
     expect(tryCatch(() => 42), some(42));
     expect(tryCatch(() => throw 'Error'), none());
   });
+
+  test('getOrElse', () {
+    final n = none();
+    final s = some(42);
+
+    expect(n.getOrElse(0), 0);
+    expect(s.getOrElse(0), 42);
+  });
 }
