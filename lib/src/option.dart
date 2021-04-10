@@ -8,8 +8,8 @@ import 'functions.dart';
 /// Another way to look at `Option` is: it represents the effect of a possibly failing computation.
 
 abstract class Option<A> {
-  bool get isNone;
-  bool get isSome;
+  bool get isNone => fold(() => true, (a) => false);
+  bool get isSome => !isNone;
 
   B fold<B>(B ifNone(), B ifSome(A a));
   A getOrElse(A a) => fold(() => a, (value) => value);
@@ -24,12 +24,6 @@ class None<A> extends Option<A> {
   int get hashCode => 0;
 
   @override
-  bool get isNone => true;
-
-  @override
-  bool get isSome => false;
-
-  @override
   B fold<B>(B Function() ifNone, B Function(A a) ifSome) => ifNone();
 }
 
@@ -42,12 +36,6 @@ class Some<A> extends Option<A> {
   bool operator ==(other) => other is Some && other.value == value;
   @override
   int get hashCode => value.hashCode;
-
-  @override
-  bool get isNone => false;
-
-  @override
-  bool get isSome => true;
 
   @override
   B fold<B>(B Function() ifNone, B Function(A a) ifSome) => ifSome(value);
