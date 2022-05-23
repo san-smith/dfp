@@ -1,19 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fp/src/functions.dart';
+import 'package:fp/src/option.dart';
 
-import 'package:fp/fp.dart';
+
 
 void main() {
   test('isNone', () {
-    final n = none();
-    final s = some(42);
+    final n = None();
+    final s = Some(42);
 
     expect(n.isNone, true);
     expect(s.isNone, false);
   });
 
   test('isSome', () {
-    final n = none();
-    final s = some(42);
+    final n = None();
+    final s = Some(42);
 
     expect(n.isSome, false);
     expect(s.isSome, true);
@@ -39,13 +41,13 @@ void main() {
   });
 
   test('tryCatch', () {
-    expect(tryCatch(() => 42), some(42));
-    expect(tryCatch(() => throw 'Error'), none());
+    expect(tryCatch(() => 42), Some(42));
+    expect(tryCatch(() => throw 'Error'), None());
   });
 
   test('getOrElse', () {
-    final n = none();
-    final s = some(42);
+    final n = None();
+    final s = Some(42);
 
     expect(n.getOrElse(0), 0);
     expect(s.getOrElse(0), 42);
