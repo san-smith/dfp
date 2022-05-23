@@ -1,9 +1,9 @@
 import 'option.dart';
 import 'result.dart';
 
-Option<A> option<A>(bool test, A value) => test ? Some(value) : None();
+Option<T> option<T>(bool test, T value) => test ? Some(value) : None<T>();
 
-Option<A> fromNullable<A>(A? a) => a != null ? Some(a) : None();
+Option<T> fromNullable<T>(T? value) => value != null ? Some(value) : None<T>();
 
 Result<T, E> tryCatch<T, E>(T Function() f) {
   try {
