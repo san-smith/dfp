@@ -28,7 +28,7 @@ abstract class Result<T, E> {
   /// Maps a Result<T, E> to Result<U, E> by applying a function to a contained Ok value, leaving an Err value untouched.
   ///
   /// This function can be used to compose the results of two functions.
-  Result<U, E> map<U>(U f(T value));
+  Result<U, E> map<U>(U Function(T value) f);
 
   /// Maps a Result<T, E> to Result<T, F> by applying a function to a contained Err value, leaving an Ok value untouched.
   ///
@@ -36,7 +36,7 @@ abstract class Result<T, E> {
   Result<T, F> mapErr<F>(F Function(E error) f);
 
   /// Converts from `Result<T, E>` to `B` by applying a function `ifOk` to a contained `Ok` value and a function `ifErr` to a contained `Err` value.
-  B fold<B>(B ifOk(T value), B ifErr(E error));
+  B fold<B>(B Function(T value) ifOk, B Function(E error) ifErr);
 
   /// Apply function `IfOk` to a contained value if it is `Ok`, otherwise do nothing.
   void ifOk(void Function(T value) ifOk) => fold(ifOk, (error) {});
@@ -49,7 +49,7 @@ abstract class Result<T, E> {
       fold(ifOk, ifErr);
 
   /// Apply function `ok` to a contained value if it is `Ok` and `ok` is present.
-  /// 
+  ///
   /// Apply function `err` to a contained error if it is `Err` and `err` is present.
   void when({void Function(T value)? ok, void Function(E error)? err}) => fold(
         ok ?? (value) {},

@@ -1,8 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:fp/src/functions.dart';
 import 'package:fp/src/option.dart';
-
-
+import 'package:test/test.dart';
 
 void main() {
   test('isNone', () {

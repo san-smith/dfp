@@ -14,13 +14,13 @@ abstract class Option<T> {
   });
 
   /// Converts from `Option<T>` to `B` by applying a function `ifSome` to a contained `Some` value and a function `ifNone` for None.
-  B fold<B>(B ifSome(T value), B ifNone());
+  B fold<B>(B Function(T value) ifSome, B Function() ifNone);
 
   /// Returns the contained Some value or a provided fallback.
   T getOrElse(T fallback) => fold((value) => value, () => fallback);
 
   /// Maps an Option<T> to Option<B> by applying a function to a contained value.
-  Option<B> map<B>(B f(T value)) => fold(
+  Option<B> map<B>(B Function(T value) f) => fold(
         (value) => Some(f(value)),
         () => None(),
       );
