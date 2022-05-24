@@ -9,16 +9,39 @@ abstract class Option<T> {
   final bool isSome;
 
   const Option({
-   required this.isNone,
-   required this.isSome,
+    required this.isNone,
+    required this.isSome,
   });
 
-  B fold<B>(B ifNone(), B ifSome(T value));
+  /// Converts from `Option<T>` to `B` by applying a function `ifSome` to a contained `Some` value and a function `ifNone` for None.
+  B fold<B>(B ifSome(T value), B ifNone());
 
   /// Returns the contained Some value or a provided fallback.
-  T getOrElse(T fallback) => fold(() => fallback, (value) => value);
+  T getOrElse(T fallback) => fold((value) => value, () => fallback);
 
-  Option<B> map<B>(B f(T value)) => fold(() => None(), (a) => Some(f(a)));
+  /// Maps an Option<T> to Option<B> by applying a function to a contained value.
+  Option<B> map<B>(B f(T value)) => fold(
+        (value) => Some(f(value)),
+        () => None(),
+      );
+
+  /// Apply function `IfSome` to a contained value if it is `Some`, otherwise do nothing.
+  void ifSome(void Function(T value) ifSome) => fold(ifSome, () {});
+
+  /// Call function `ifNone` if it is `None`, otherwise do nothing.
+  void ifNone(void Function() ifNone) => fold((value) {}, ifNone);
+
+  /// Apply function `IfSome` to a contained value if it is `Some`, otherwise call function `ifNone`.
+  void ifSomeElse(void Function(T value) ifSome, void Function() ifNone) =>
+      fold(ifSome, ifNone);
+
+  /// Apply function [some] to a contained value if it is `Some` and [some] is present.
+  ///
+  /// Call function [none] if it is `None` and [none] is present.
+  void when({void Function(T value)? some, void Function()? none}) => fold(
+        some ?? (value) {},
+        none ?? () {},
+      );
 }
 
 /// No value.
@@ -31,7 +54,7 @@ class None<T> extends Option<T> {
   int get hashCode => 0;
 
   @override
-  B fold<B>(B Function() ifNone, B Function(T a) ifSome) => ifNone();
+  B fold<B>(B Function(T a) ifSome, B Function() ifNone) => ifNone();
 }
 
 /// Some value of type [T].
@@ -46,5 +69,5 @@ class Some<T> extends Option<T> {
   int get hashCode => value.hashCode;
 
   @override
-  B fold<B>(B Function() ifNone, B Function(T a) ifSome) => ifSome(value);
+  B fold<B>(B Function(T a) ifSome, B Function() ifNone) => ifSome(value);
 }

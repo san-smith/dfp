@@ -29,6 +29,32 @@ abstract class Result<T, E> {
   ///
   /// This function can be used to compose the results of two functions.
   Result<U, E> map<U>(U f(T value));
+
+  /// Maps a Result<T, E> to Result<T, F> by applying a function to a contained Err value, leaving an Ok value untouched.
+  ///
+  /// This function can be used to pass through a successful result while handling an error.
+  Result<T, F> mapErr<F>(F Function(E error) f);
+
+  /// Converts from `Result<T, E>` to `B` by applying a function `ifOk` to a contained `Ok` value and a function `ifErr` to a contained `Err` value.
+  B fold<B>(B ifOk(T value), B ifErr(E error));
+
+  /// Apply function `IfOk` to a contained value if it is `Ok`, otherwise do nothing.
+  void ifOk(void Function(T value) ifOk) => fold(ifOk, (error) {});
+
+  /// Apply function `ifErr` to a contained error if it is `Err`, otherwise do nothing.
+  void ifErr(void Function(E error) ifErr) => fold((value) {}, ifErr);
+
+  /// Apply function `IfOk` to a contained value if it is `Ok`, otherwise apply function `ifErr` to a contained error.
+  void ifOkElse(void Function(T value) ifOk, void Function(E error) ifErr) =>
+      fold(ifOk, ifErr);
+
+  /// Apply function `ok` to a contained value if it is `Ok` and `ok` is present.
+  /// 
+  /// Apply function `err` to a contained error if it is `Err` and `err` is present.
+  void when({void Function(T value)? ok, void Function(E error)? err}) => fold(
+        ok ?? (value) {},
+        err ?? (error) {},
+      );
 }
 
 class Ok<T, E> extends Result<T, E> {
@@ -43,7 +69,14 @@ class Ok<T, E> extends Result<T, E> {
         );
 
   @override
+  B fold<B>(B Function(T value) ifOk, B Function(E error) ifErr) =>
+      ifOk(_value);
+
+  @override
   Result<U, E> map<U>(U Function(T value) f) => Ok(f(_value));
+
+  @override
+  Result<T, F> mapErr<F>(F Function(E error) f) => Ok(_value);
 }
 
 class Err<T, E> extends Result<T, E> {
@@ -58,5 +91,12 @@ class Err<T, E> extends Result<T, E> {
         );
 
   @override
+  B fold<B>(B Function(T value) ifOk, B Function(E error) ifErr) =>
+      ifErr(_error);
+
+  @override
   Result<U, E> map<U>(U Function(T value) f) => Err(_error);
+
+  @override
+  Result<T, F> mapErr<F>(F Function(E error) f) => Err(f(_error));
 }
