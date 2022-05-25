@@ -53,6 +53,7 @@ class None<T> extends Option<T> {
 
   @override
   bool operator ==(other) => other is None;
+
   @override
   int get hashCode => 0;
 
@@ -68,6 +69,7 @@ class Some<T> extends Option<T> {
 
   @override
   bool operator ==(other) => other is Some && other.value == value;
+
   @override
   int get hashCode => value.hashCode;
 

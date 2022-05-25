@@ -57,6 +57,7 @@ abstract class Result<T, E> {
       );
 }
 
+/// Contains the success value
 class Ok<T, E> extends Result<T, E> {
   final T _value;
 
@@ -77,8 +78,15 @@ class Ok<T, E> extends Result<T, E> {
 
   @override
   Result<T, F> mapErr<F>(F Function(E error) f) => Ok(_value);
+
+  @override
+  bool operator ==(other) => other is Ok && other._value == _value;
+
+  @override
+  int get hashCode => _value.hashCode;
 }
 
+/// Contains the error value
 class Err<T, E> extends Result<T, E> {
   final E _error;
 
@@ -99,4 +107,10 @@ class Err<T, E> extends Result<T, E> {
 
   @override
   Result<T, F> mapErr<F>(F Function(E error) f) => Err(f(_error));
+
+  @override
+  bool operator ==(other) => other is Err && other._error == _error;
+
+  @override
+  int get hashCode => _error.hashCode;
 }
