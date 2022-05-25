@@ -42,6 +42,9 @@ abstract class Option<T> {
         some ?? (value) {},
         none ?? () {},
       );
+
+  /// Returns the contained Some value or null.
+  T? toNullable() => fold((value) => value, () => null);
 }
 
 /// No value.
