@@ -13,6 +13,9 @@ abstract class Option<T> {
     required this.isSome,
   });
 
+  factory Option.fromNullable(T? value) =>
+      value != null ? Some(value) : None<T>();
+
   /// Converts from `Option<T>` to `B` by applying a function `ifSome` to a contained `Some` value and a function `ifNone` for None.
   B fold<B>(B Function(T value) ifSome, B Function() ifNone);
 
@@ -45,6 +48,9 @@ abstract class Option<T> {
 
   /// Returns the contained Some value or null.
   T? toNullable() => fold((value) => value, () => null);
+
+  static Option<T> flatten<T>(Option<Option<T>> option) =>
+      option.fold((value) => value, () => None());
 }
 
 /// No value.
