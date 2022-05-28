@@ -130,5 +130,15 @@ void main() {
       expect(ok.hashCode, 42.hashCode);
       expect(err.hashCode, 'error'.hashCode);
     });
+
+    test('flatten', () {
+      Result<Result<int, String>, String> ok = Ok(Ok(42));
+      Result<Result<int, String>, String> err = Ok(Err('Error'));
+      Result<Result<int, String>, String> err2 = Err('Error');
+
+      expect(Result.flatten(ok), Ok(42));
+      expect(Result.flatten(err), Err('Error'));
+      expect(Result.flatten(err2), Err('Error'));
+    });
   });
 }

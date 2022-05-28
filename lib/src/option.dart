@@ -49,6 +49,7 @@ abstract class Option<T> {
   /// Returns the contained Some value or null.
   T? toNullable() => fold((value) => value, () => null);
 
+  /// Converts from `Option<Option<T>>` to `Option<T>`.
   static Option<T> flatten<T>(Option<Option<T>> option) =>
       option.fold((value) => value, () => None());
 }

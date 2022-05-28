@@ -55,6 +55,13 @@ abstract class Result<T, E> {
         ok ?? (value) {},
         err ?? (error) {},
       );
+
+  /// Converts from Result<Result<T, E>, E> to Result<T, E>
+  static Result<T, E> flatten<T, E>(Result<Result<T, E>, E> result) =>
+      result.fold(
+        (value) => value,
+        (error) => Err(error),
+      );
 }
 
 /// Contains the success value
