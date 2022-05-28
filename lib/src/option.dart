@@ -1,3 +1,5 @@
+import 'package:fp/fp.dart';
+
 /// `Option<A>` is a container for an optional value of type `A`. If the value of type `A` is present, the `Option<A>` is
 /// an instance of `Some<A>`, containing the present value of type `A`. If the value is absent, the `Option<A>` is an
 /// instance of `None`.
@@ -48,6 +50,9 @@ abstract class Option<T> {
 
   /// Returns the contained Some value or null.
   T? toNullable() => fold((value) => value, () => null);
+
+  /// Transforms the Option<T> into a Result<T, E>, mapping Some(v) to Ok(v) and None to Err(err).
+  Result<T, E> okOr<E>(E error) => fold((value) => Ok(value), () => Err(error));
 
   /// Converts from `Option<Option<T>>` to `Option<T>`.
   static Option<T> flatten<T>(Option<Option<T>> option) =>

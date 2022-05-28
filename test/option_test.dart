@@ -1,3 +1,4 @@
+import 'package:fp/fp.dart';
 import 'package:fp/src/functions.dart';
 import 'package:fp/src/option.dart';
 import 'package:mockito/mockito.dart';
@@ -157,6 +158,14 @@ void main() {
 
       expect(Option.flatten(s), Some(42));
       expect(Option.flatten(n), None<int>());
+    });
+
+    test('okOr', () {
+      final s = Some(42);
+      final n = None<int>();
+
+      expect(s.okOr('error'), Ok(42));
+      expect(n.okOr('error'), Err('error'));
     });
   });
 }
