@@ -1,3 +1,4 @@
+import 'package:fp/src/functions.dart';
 import 'package:fp/src/option.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -12,6 +13,14 @@ class TestMock<T> extends Mock implements Test<T> {}
 
 void main() {
   group('Option', () {
+    test('fromNullable', () {
+      final n = Option.fromNullable(null);
+      final s = Option.fromNullable(42);
+
+      expect(n, None());
+      expect(s, Some(42));
+    });
+
     test('isNone', () {
       final n = None();
       final s = Some(42);
@@ -140,6 +149,14 @@ void main() {
 
       expect(s.hashCode, 42.hashCode);
       expect(n.hashCode, 0);
+    });
+
+    test('flatten', () {
+      final s = option(true, option(true, 42));
+      final n = option(false, option(false, 42));
+
+      expect(Option.flatten(s), Some(42));
+      expect(Option.flatten(n), None<int>());
     });
   });
 }
