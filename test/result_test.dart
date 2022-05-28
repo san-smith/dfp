@@ -140,5 +140,15 @@ void main() {
       expect(Result.flatten(err), Err('Error'));
       expect(Result.flatten(err2), Err('Error'));
     });
+
+    test('transpose', () {
+      Result<Option<int>, String> n = Ok(None());
+      Result<Option<int>, String> s = Ok(Some(42));
+      Result<Option<int>, String> err = Err('Error');
+
+      expect(Result.transpose(n), None());
+      expect(Result.transpose(s), Some(Ok(42)));
+      expect(Result.transpose(err), Some(Err('Error')));
+    });
   });
 }

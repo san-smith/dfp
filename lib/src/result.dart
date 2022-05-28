@@ -62,6 +62,15 @@ abstract class Result<T, E> {
         (value) => value,
         (error) => Err(error),
       );
+
+  /// Transposes a Result of an Option into an Option of a Result.
+  ///
+  /// Ok(None()) will be mapped to None(). Ok(Some(value)) and Err(value) will be mapped to Some(Ok(value)) and Some(Err(value)).
+  static Option<Result<T, E>> transpose<T, E>(Result<Option<T>, E> result) =>
+      result.fold(
+        (value) => value.map((v) => Ok(v)),
+        (error) => Some(Err(error)),
+      );
 }
 
 /// Contains the success value

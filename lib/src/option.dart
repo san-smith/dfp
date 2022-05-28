@@ -57,6 +57,15 @@ abstract class Option<T> {
   /// Converts from `Option<Option<T>>` to `Option<T>`.
   static Option<T> flatten<T>(Option<Option<T>> option) =>
       option.fold((value) => value, () => None());
+
+  /// Transposes an Option of a Result into a Result of an Option.
+  ///
+  /// None() will be mapped to Ok(None()). Some(Ok(value)) and Some(Err(value)) will be mapped to Ok(Some(value)) and Err(value).
+  static Result<Option<T>, E> transpose<T, E>(Option<Result<T, E>> option) =>
+      option.fold(
+        (value) => value.map((v) => Some(v)),
+        () => Ok(None()),
+      );
 }
 
 /// No value.

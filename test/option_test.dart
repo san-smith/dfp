@@ -167,5 +167,15 @@ void main() {
       expect(s.okOr('error'), Ok(42));
       expect(n.okOr('error'), Err('error'));
     });
+
+    test('transpose', () {
+      Option<Result<int, String>> n = None();
+      Option<Result<int, String>> ok = Some(Ok(42));
+      Option<Result<int, String>> err = Some(Err('Error'));
+
+      expect(Option.transpose(n), Ok(None()));
+      expect(Option.transpose(ok), Ok(Some(42)));
+      expect(Option.transpose(err), Err('Error'));
+    });
   });
 }
