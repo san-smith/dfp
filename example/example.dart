@@ -1,27 +1,16 @@
+import 'dart:io';
 import 'dart:math';
 
-import 'package:fp/src/functions.dart';
+import 'package:fp/src/option.dart';
 
 void main() async {
-  final a = tryCatch<int, String>(() => getEven(1));
-  final b = a
-      .map(((value) => value.toDouble()))
-      .map(sqr)
-      .map(exp)
-      .map(toStringAsFixed2);
-
-  b.when(
-    ok: (value) {
-      print('value: $value');
-    },
-    err: (error) {
-      print('error: $error');
-    },
+  final str = Option.fromNullable(stdin.readLineSync());
+  final number = Option.flatten(
+    str.map((value) => Option.fromNullable(double.tryParse(value))),
   );
+  final fixed = number
+      .map(sin)
+      .map((value) => value * 2)
+      .map((value) => value.abs().toStringAsFixed(2));
+  print(fixed.toNullable());
 }
-
-int getEven(int x) => x % 2 == 0 ? x : throw '$x is not even!';
-
-double sqr(double x) => x * x;
-
-String toStringAsFixed2(double x) => x.toStringAsFixed(2);
