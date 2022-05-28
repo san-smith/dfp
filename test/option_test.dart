@@ -134,7 +134,7 @@ void main() {
       expect(n.toNullable(), null);
     });
 
-    test('hasCode', () {
+    test('hashCode', () {
       final s = Some(42);
       final n = None<int>();
 

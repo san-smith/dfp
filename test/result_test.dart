@@ -123,7 +123,7 @@ void main() {
       });
     });
 
-    test('hasCode', () {
+    test('hashCode', () {
       final ok = Ok(42);
       final err = Err('error');
 
