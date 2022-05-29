@@ -1,6 +1,7 @@
 name: fp
 description: A library for typed functional programming in Dart, inspired by Rust.
-version: 0.0.1
+version: 0.2.0
+repository: https://github.com/san-smith/fp
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
