@@ -1,4 +1,4 @@
-import 'package:fp/fp.dart';
+import 'option.dart';
 
 /// Result is a type that represents either success (Ok) or failure (Err).
 abstract class Result<T, E> {

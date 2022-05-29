@@ -1,5 +1,5 @@
-import 'package:fp/src/functions.dart';
-import 'package:fp/src/result.dart';
+import 'package:dfp/src/functions.dart';
+import 'package:dfp/src/result.dart';
 import 'package:test/test.dart';
 
 void main() {

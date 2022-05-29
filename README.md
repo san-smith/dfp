@@ -1,6 +1,6 @@
-# fp
+# dfp
 
-fp is a library for typed functional programming in Dart, inspired by [Rust](https://www.rust-lang.org/).
+`dfp` is a library for typed functional programming in Dart, inspired by [Rust](https://www.rust-lang.org/).
 
 ## Result
 
@@ -9,7 +9,7 @@ Result is a type that represents either success (`Ok`) or failure (`Err`).
 For example, you can use Result with `dio`:
 
 ```dart
-import 'package:fp/fp.dart';
+import 'package:dfp/dfp.dart';
 
 ...
 

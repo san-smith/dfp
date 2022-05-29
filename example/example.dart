@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:fp/src/option.dart';
+import 'package:dfp/dfp.dart';
 
 void main() async {
   final str = Option.fromNullable(stdin.readLineSync());

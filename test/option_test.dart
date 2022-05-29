@@ -1,6 +1,6 @@
-import 'package:fp/fp.dart';
-import 'package:fp/src/functions.dart';
-import 'package:fp/src/option.dart';
+import 'package:dfp/src/functions.dart';
+import 'package:dfp/src/option.dart';
+import 'package:dfp/src/result.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 

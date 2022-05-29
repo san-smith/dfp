@@ -1,4 +1,4 @@
-library fp;
+library dfp;
 
 export 'src/option.dart';
 export 'src/result.dart';

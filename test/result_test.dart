@@ -1,5 +1,5 @@
-import 'package:fp/fp.dart';
-import 'package:fp/src/result.dart';
+import 'package:dfp/src/option.dart';
+import 'package:dfp/src/result.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
