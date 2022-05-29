@@ -48,7 +48,7 @@ We can use the result value with the provided methods, such as ifOkElse:
   },
 ```
 
-If we don't care about the error, then we can use the `result.ok` value, which also provides many useful methods. For example:
+If we don't care about the error, we can use the `result.ok` value, which also provides many useful methods. For example:
 
 ```dart
   Future<Option<User>> fetchUser() async {
@@ -72,7 +72,7 @@ If we don't care about the error, then we can use the `result.ok` value, which a
     final result = await fetchUser();
     result.ifSomeElse((user) {
       emit(UserState.loaded(user));
-    }, (error) {
+    }, () {
       emit(UserState.error());
     });
   },
