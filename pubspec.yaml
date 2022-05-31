@@ -1,6 +1,6 @@
 name: dfp
 description: A library for typed functional programming in Dart, inspired by Rust.
-version: 0.2.0
+version: 0.2.1
 repository: https://github.com/san-smith/dfp
 
 environment:
