@@ -23,11 +23,13 @@
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
+
+# If you're building an application, you may want to check-in your pubspec.lock
+pubspec.lock
+
 build/
 coverage/
 
