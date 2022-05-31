@@ -102,6 +102,10 @@ result.when(
 An option could be looked at as a collection or foldable structure with either one or zero elements.
 Another way to look at `Option` is: it represents the effect of a possibly failing computation.
 
+The `Option` class also provides a number of useful methods such as `map`, `ifSome`, `ifNone`, `ifSomeElse`, and `whe`n. These methods work in the same way as the `map`, ..., `when` methods of the `Result`.
+
+You can create an `Option` object from a nullable value using the `Option.fromNullable` constructor or the `fromNullable` function, like this:
+
 ```dart
 final str = Option.fromNullable(stdin.readLineSync());
 final number = Option.flatten(
@@ -112,4 +116,38 @@ final fixed = number
     .map((value) => value * 2)
     .map((value) => value.abs().toStringAsFixed(2));
 print(fixed.toNullable());
+```
+
+`toNullable` method conversely allows you to turn an Option object into a value of the nullable type.
+
+You can convert an `Option` to a `Result` using the `okOr` method:
+
+```dart
+final n = Option.fromNullable(double.tryParse('value'));
+final result = n.okOr('Not a number'); // Result<double, String>
+
+```
+
+Or you can get the contained `Option` value using the `getOrElse` method. It returns the contained `Some` value or a provided fallback for `None`:
+
+```dart
+final n = Option.fromNullable(double.tryParse('value'));
+print(sin(n.getOrElse(0)));
+```
+
+## functions
+
+`dft` also provides several functions that can be used to get `Option` and `Result` objects:
+
+```dart
+final value = 5;
+final even = option(value.isEven, value);
+
+final nullable = fromNullable(double.tryParse('value'));
+
+final number =
+    tryCatch<double, FormatException>(() => double.parse('source'));
+
+final result = asyncTryCatch<Response<Map<String, dynamic>>, DioError>(
+    dio.get(Urls.account));
 ```
