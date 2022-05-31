@@ -1,5 +1,5 @@
 library dfp;
 
-export 'src/option.dart';
-export 'src/result.dart';
-export 'src/functions.dart';
+export 'package:dfp/src/option.dart';
+export 'package:dfp/src/result.dart';
+export 'package:dfp/src/functions.dart';
