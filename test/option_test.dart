@@ -62,6 +62,14 @@ void main() {
       expect(s.map((value) => value.toString()), Some('42'));
     });
 
+    test('flatMap', () {
+      final n = None<int>();
+      final s = Some(42);
+
+      expect(n.flatMap((value) => Some(value)), None<String>());
+      expect(s.flatMap((value) => Some(value)), Some(42));
+    });
+
     group('ifSome', () {
       final s = Some(42);
       final n = None<int>();

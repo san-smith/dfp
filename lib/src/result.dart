@@ -35,6 +35,22 @@ abstract class Result<T, E> {
   /// This function can be used to pass through a successful result while handling an error.
   Result<T, F> mapErr<F>(F Function(E error) f);
 
+  /// Calls `f` if the result is `Ok`, otherwise returns the `Err` value of self.
+  ///
+  /// This method can be used for control flow based on Result values.
+  /// ```
+  /// Result<double, String> getReciprocal(double n) => tryCatch(() => 1 / n);
+  ///
+  /// final number = fromNullable(stdin.readLineSync())
+  ///      .okOr('No bytes preceded the end of input')
+  ///      .flatMap((value) => tryCatch(() => double.parse(value)))
+  ///      .flatMap((value) => getReciprocal(value));
+  /// ```
+  Result<U, E> flatMap<U>(Result<U, E> Function(T value) f) => fold(
+        (value) => f(value),
+        (error) => Err(error),
+      );
+
   /// Converts from `Result<T, E>` to `B` by applying a function `ifOk` to a contained `Ok` value and a function `ifErr` to a contained `Err` value.
   B fold<B>(B Function(T value) ifOk, B Function(E error) ifErr);
 

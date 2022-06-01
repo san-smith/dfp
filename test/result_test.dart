@@ -45,6 +45,14 @@ void main() {
       expect(err.map((value) => 'value: $value'), err);
     });
 
+    test('flatMap works correctly', () {
+      final ok = Ok(42);
+      final err = Err('error');
+
+      expect(ok.flatMap((value) => Ok(value)), Ok(42));
+      expect(err.flatMap((value) => Ok(value)), err);
+    });
+
     test('mapErr works correctly', () {
       final ok = Ok(42);
       final err = Err('error');

@@ -30,6 +30,12 @@ abstract class Option<T> {
         () => None(),
       );
 
+  /// Returns None if the option is None, otherwise calls f with the wrapped value and returns the result.
+  Option<B> flatMap<B>(Option<B> Function(T value) f) => fold(
+        (value) => f(value),
+        () => None(),
+      );
+
   /// Apply function `IfSome` to a contained value if it is `Some`, otherwise do nothing.
   void ifSome(void Function(T value) ifSome) => fold(ifSome, () {});
 
