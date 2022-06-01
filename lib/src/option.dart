@@ -36,6 +36,23 @@ abstract class Option<T> {
         () => None(),
       );
 
+  /// Returns None if the option is None, otherwise calls predicate with the wrapped value and returns:
+  ///
+  /// * Some(t) if predicate returns true (where t is the wrapped value), and
+  /// * None if predicate returns false.
+  ///
+  ///
+  /// Example:
+  /// ```
+  ///   final evenNumber = fromNullable(stdin.readLineSync())
+  ///       .flatMap((value) => fromNullable(int.tryParse(value)))
+  ///       .filter((value) => value.isEven);
+  /// ```
+  Option<T> filter(bool Function(T value) predicate) => fold(
+        (value) => predicate(value) ? Some(value) : None(),
+        () => None(),
+      );
+
   /// Apply function `IfSome` to a contained value if it is `Some`, otherwise do nothing.
   void ifSome(void Function(T value) ifSome) => fold(ifSome, () {});
 

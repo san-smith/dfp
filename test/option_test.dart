@@ -70,6 +70,18 @@ void main() {
       expect(s.flatMap((value) => Some(value)), Some(42));
     });
 
+    test('filter', () {
+      final n = None<int>();
+      final odd = Some(11);
+      final even = Some(42);
+
+      bool isEven(value) => value.isEven;
+
+      expect(n.filter(isEven), None());
+      expect(odd.filter(isEven), None());
+      expect(even.filter(isEven), Some(42));
+    });
+
     group('ifSome', () {
       final s = Some(42);
       final n = None<int>();
