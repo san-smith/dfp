@@ -53,6 +53,17 @@ void main() {
       expect(err.flatMap((value) => Ok(value)), err);
     });
 
+    test('flatMapErr works correctly', () {
+      final ok = Ok<int, String>(42);
+      final err = Err<int, String>('error');
+
+      expect(ok.flatMapErr((value) => Err(value)), Ok(42));
+      expect(
+        err.flatMapErr((value) => Err('Error: $value')),
+        Err('Error: error'),
+      );
+    });
+
     test('mapErr works correctly', () {
       final ok = Ok(42);
       final err = Err('error');

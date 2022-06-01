@@ -38,6 +38,8 @@ abstract class Result<T, E> {
   /// Calls `f` if the result is `Ok`, otherwise returns the `Err` value of self.
   ///
   /// This method can be used for control flow based on Result values.
+  ///
+  /// Example:
   /// ```
   /// Result<double, String> getReciprocal(double n) => tryCatch(() => 1 / n);
   ///
@@ -49,6 +51,14 @@ abstract class Result<T, E> {
   Result<U, E> flatMap<U>(Result<U, E> Function(T value) f) => fold(
         (value) => f(value),
         (error) => Err(error),
+      );
+
+  /// Calls `f` if the result is `Err`, otherwise returns the `Ok` value of self.
+  ///
+  /// This method can be used for control flow based on Result values.
+  Result<T, F> flatMapErr<F>(Result<T, F> Function(E error) f) => fold(
+        (value) => Ok(value),
+        (error) => f(error),
       );
 
   /// Converts from `Result<T, E>` to `B` by applying a function `ifOk` to a contained `Ok` value and a function `ifErr` to a contained `Err` value.
