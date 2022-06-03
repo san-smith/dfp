@@ -1,3 +1,17 @@
+## [0.3.0] - 03.05.2022
+
+Added new methods to `Option` and `Result`.
+
+Option:
+
+- `flatMap` - returns None or calls `f` with the wrapped value and returns `Some(f(value))`;
+- `filter` - returns None if the option is None or predicate returns false, otherwise returns Some.
+
+Result:
+
+- `flatMap` - calls `f` if the result is `Ok`, otherwise returns the `Err` value of self;
+- `flatMapErr` - Calls `f` if the result is `Err`, otherwise returns the `Ok` value of self.
+
 ## [0.2.1] - 31.05.2022
 
 Restricted the parameterized type E for tryCatch and asyncTryCatch.

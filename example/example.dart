@@ -4,13 +4,12 @@ import 'dart:math';
 import 'package:dfp/dfp.dart';
 
 void main() async {
-  final str = Option.fromNullable(stdin.readLineSync());
-  final number = Option.flatten(
-    str.map((value) => Option.fromNullable(double.tryParse(value))),
-  );
-  final fixed = number
+  final number = fromNullable(stdin.readLineSync())
+      .flatMap((value) => fromNullable(double.tryParse(value)))
       .map(sin)
+      .filter((value) => value >= 0)
       .map((value) => value * 2)
       .map((value) => value.abs().toStringAsFixed(2));
-  print(fixed.toNullable());
+
+  print(number.toNullable());
 }
