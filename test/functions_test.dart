@@ -29,8 +29,8 @@ void main() {
     });
 
     test('asyncTryCatch', () async {
-      final ok = await asyncTryCatch(Future.value(42));
-      final err = await asyncTryCatch(Future.error('Error'));
+      final ok = await asyncTryCatch(() async => 42);
+      final err = await asyncTryCatch(() => Future.error('Error'));
 
       expect(ok, Ok(42));
       expect(err, Err('Error'));

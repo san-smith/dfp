@@ -1,0 +1,14 @@
+{
+    "dart.previewFlutterUiGuides": true,
+    "dart.previewFlutterUiGuidesCustomTracking": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "files.insertFinalNewline": true,
+    }
+}
