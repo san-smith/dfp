@@ -148,6 +148,6 @@ final nullable = fromNullable(double.tryParse('value'));
 final number =
     tryCatch<double, FormatException>(() => double.parse('source'));
 
-final result = asyncTryCatch<Response<Map<String, dynamic>>, DioError>(
+final result = asyncTryCatch<Response<Map<String, dynamic>>, DioError>(() =>
     dio.get(Urls.account));
 ```
