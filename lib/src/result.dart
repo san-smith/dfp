@@ -1,7 +1,7 @@
 import 'option.dart';
 
 /// Result is a type that represents either success (Ok) or failure (Err).
-abstract class Result<T, E> {
+sealed class Result<T, E> {
   /// Returns true if the result is Ok.
   final bool isOk;
 
@@ -24,6 +24,10 @@ abstract class Result<T, E> {
     required this.ok,
     required this.error,
   });
+
+  factory Result.ok(T value) => Ok(value);
+
+  factory Result.err(E error) => Err(error);
 
   /// Maps a Result<T, E> to Result<U, E> by applying a function to a contained Ok value, leaving an Err value untouched.
   ///
@@ -131,8 +135,9 @@ class Ok<T, E> extends Result<T, E> {
 /// Contains the error value
 class Err<T, E> extends Result<T, E> {
   final E _error;
+  final StackTrace? stackTrace;
 
-  Err(this._error)
+  Err(this._error, [this.stackTrace])
       : super(
           isOk: false,
           isErr: true,

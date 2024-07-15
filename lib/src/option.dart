@@ -6,7 +6,7 @@ import 'result.dart';
 ///
 /// An option could be looked at as a collection or foldable structure with either one or zero elements.
 /// Another way to look at `Option` is: it represents the effect of a possibly failing computation.
-abstract class Option<T> {
+sealed class Option<T> {
   final bool isNone;
   final bool isSome;
 
@@ -17,6 +17,10 @@ abstract class Option<T> {
 
   factory Option.fromNullable(T? value) =>
       value != null ? Some(value) : None<T>();
+
+  factory Option.none() => None();
+
+  factory Option.some(T value) => Some(value);
 
   /// Converts from `Option<T>` to `B` by applying a function `ifSome` to a contained `Some` value and a function `ifNone` for None.
   B fold<B>(B Function(T value) ifSome, B Function() ifNone);
