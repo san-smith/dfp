@@ -1,3 +1,11 @@
+## [0.4.0] - 15.07.2024
+
+Update min SDK version.
+
+Migrate to sealed classes.
+
+Refactor `asyncTryCatch` - use future callback instead of future object.
+
 ## [0.3.0] - 03.05.2022
 
 Added new methods to `Option` and `Result`.
@@ -29,6 +37,6 @@ A number of new methods have been added for Result and Option:
 - static method `transpose` for both classes that transposes a Result of an Option into an Option of a Result (and vice versa);
 - added tests for all methods (code coverage is 100%).
 
-## [0.0.1] - TODO: Add release date.
+## [0.0.1] - TODO: Add release date
 
 - TODO: Describe initial release.
