@@ -16,9 +16,9 @@ sealed class Option<T> {
   });
 
   factory Option.fromNullable(T? value) =>
-      value != null ? Some(value) : None<T>();
+      value != null ? Some<T>(value) : None<T>();
 
-  factory Option.none() => None();
+  factory Option.none() => None<T>();
 
   factory Option.some(T value) => Some(value);
 
@@ -30,7 +30,7 @@ sealed class Option<T> {
 
   /// Maps an Option<T> to Option<B> by applying a function to a contained value.
   Option<B> map<B>(B Function(T value) f) => fold(
-        (value) => Some(f(value)),
+        (value) => Some<B>(f(value)),
         () => None(),
       );
 
@@ -53,8 +53,8 @@ sealed class Option<T> {
   ///       .filter((value) => value.isEven);
   /// ```
   Option<T> filter(bool Function(T value) predicate) => fold(
-        (value) => predicate(value) ? Some(value) : None(),
-        () => None(),
+        (value) => predicate(value) ? Some<T>(value) : None<T>(),
+        () => None<T>(),
       );
 
   /// Apply function `IfSome` to a contained value if it is `Some`, otherwise do nothing.
@@ -79,11 +79,12 @@ sealed class Option<T> {
   T? toNullable() => fold((value) => value, () => null);
 
   /// Transforms the Option<T> into a Result<T, E>, mapping Some(v) to Ok(v) and None to Err(err).
-  Result<T, E> okOr<E>(E error) => fold((value) => Ok(value), () => Err(error));
+  Result<T, E> okOr<E>(E error) =>
+      fold((value) => Ok<T, E>(value), () => Err<T, E>(error));
 
   /// Converts from `Option<Option<T>>` to `Option<T>`.
   static Option<T> flatten<T>(Option<Option<T>> option) =>
-      option.fold((value) => value, () => None());
+      option.fold((value) => value, () => None<T>());
 
   /// Transposes an Option of a Result into a Result of an Option.
   ///
@@ -91,7 +92,7 @@ sealed class Option<T> {
   static Result<Option<T>, E> transpose<T, E>(Option<Result<T, E>> option) =>
       option.fold(
         (value) => value.map((v) => Some(v)),
-        () => Ok(None()),
+        () => Ok<Option<T>, E>(None()),
       );
 }
 

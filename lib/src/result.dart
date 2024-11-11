@@ -25,9 +25,9 @@ sealed class Result<T, E> {
     required this.error,
   });
 
-  factory Result.ok(T value) => Ok(value);
+  factory Result.ok(T value) => Ok<T, E>(value);
 
-  factory Result.err(E error) => Err(error);
+  factory Result.err(E error) => Err<T, E>(error);
 
   /// Maps a Result<T, E> to Result<U, E> by applying a function to a contained Ok value, leaving an Err value untouched.
   ///
@@ -54,14 +54,14 @@ sealed class Result<T, E> {
   /// ```
   Result<U, E> flatMap<U>(Result<U, E> Function(T value) f) => fold(
         (value) => f(value),
-        (error) => Err(error),
+        (error) => Err<U, E>(error),
       );
 
   /// Calls `f` if the result is `Err`, otherwise returns the `Ok` value of self.
   ///
   /// This method can be used for control flow based on Result values.
   Result<T, F> flatMapErr<F>(Result<T, F> Function(E error) f) => fold(
-        (value) => Ok(value),
+        (value) => Ok<T, F>(value),
         (error) => f(error),
       );
 
@@ -90,7 +90,7 @@ sealed class Result<T, E> {
   static Result<T, E> flatten<T, E>(Result<Result<T, E>, E> result) =>
       result.fold(
         (value) => value,
-        (error) => Err(error),
+        (error) => Err<T, E>(error),
       );
 
   /// Transposes a Result of an Option into an Option of a Result.
@@ -120,10 +120,10 @@ class Ok<T, E> extends Result<T, E> {
       ifOk(_value);
 
   @override
-  Result<U, E> map<U>(U Function(T value) f) => Ok(f(_value));
+  Result<U, E> map<U>(U Function(T value) f) => Ok<U, E>(f(_value));
 
   @override
-  Result<T, F> mapErr<F>(F Function(E error) f) => Ok(_value);
+  Result<T, F> mapErr<F>(F Function(E error) f) => Ok<T, F>(_value);
 
   @override
   bool operator ==(other) => other is Ok && other._value == _value;
@@ -150,10 +150,10 @@ class Err<T, E> extends Result<T, E> {
       ifErr(_error);
 
   @override
-  Result<U, E> map<U>(U Function(T value) f) => Err(_error);
+  Result<U, E> map<U>(U Function(T value) f) => Err<U, E>(_error);
 
   @override
-  Result<T, F> mapErr<F>(F Function(E error) f) => Err(f(_error));
+  Result<T, F> mapErr<F>(F Function(E error) f) => Err<T, F>(f(_error));
 
   @override
   bool operator ==(other) => other is Err && other._error == _error;
